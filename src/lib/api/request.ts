@@ -1,19 +1,23 @@
 import { PostType } from '$lib/enum'
 import Cookies from 'js-cookie'
 import { goto } from '$app/navigation';
-
+import {transformObj2Params} from '$lib/utils'
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD'
   headers?: { [key: string]: string }
-  body?: BodyInit
+  body?: BodyInit,
+  params?: String
 }
 
 export interface ResponseMessage{
   code: number
-  message: string
-  data?: any
+  message?: string
+  page?: number,
+  data?: Array<object>,
   access_token?: string
 }
+
+
 // 定义拦截器的接口
 interface Intercepter<T> {
   onFulfilled?: (value: T) => T | Promise<T>
@@ -47,7 +51,6 @@ async function request<T>(
 ): Promise<any> {
   const requestInterceptors = new InterceptorManager<RequestOptions>()
   const responseInterceptors = new InterceptorManager<any>()
-
   // 添加请求拦截器
   requestInterceptors.use({
     onFulfilled: (options): RequestOptions => {
@@ -100,12 +103,13 @@ async function request<T>(
   return response.json() as Promise<T>
 }
 
-export const get = async <T>(url: string, params: BodyInit): Promise<T> => {
+export const get = async(url: string, params: any): Promise<ResponseMessage> => {
+  url = transformObj2Params(params, url)
   const response = await request(url, {
     method: 'GET',
-    body: params,
+    params
   })
-  return response as Promise<T>
+  return response as Promise<ResponseMessage>
 }
 export const post = async <T>(
   url: string,

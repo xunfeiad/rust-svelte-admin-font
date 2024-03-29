@@ -63,7 +63,8 @@
 			icon: RectangleListSolid,
 			children: {
 				Products: '/crud/products',
-				Users: '/crud/users'
+				Users: '/crud/users',
+				Control: '/crud/access'
 			}
 		},
 		{ name: 'Settings', icon: CogOutline, href: '/settings' },
