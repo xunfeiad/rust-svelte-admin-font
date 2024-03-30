@@ -13,6 +13,7 @@ export interface ResponseMessage{
   code: number
   message?: string
   page?: number,
+  total?: number,
   data?: Array<object>,
   access_token?: string
 }

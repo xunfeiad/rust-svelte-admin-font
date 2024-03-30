@@ -22,11 +22,18 @@
 		"gen:compo-data": "svelte-lib-helpers compo-data",
 		"copy:package": "svelte-lib-helpers package",
 		"lib-helpers": "npm run gen:docs && npm run gen:compo-data && npm run build && npm run gen:exports && npm run copy:package",
-		"package:publish": "standard-version && git push --follow-tags origin main && npm publish"
+		"package:publish": "standard-version && git push --follow-tags origin main && npm publish",
+		"prepare": "npm run smui-theme-light && npm run smui-theme-dark",
+		"smui-theme-light": "smui-theme compile static/smui.css -i src/theme",
+		"smui-theme-dark": "smui-theme compile static/smui-dark.css -i src/theme/dark"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.42.1",
 		"@smui/button": "7.0.0-beta.18",
+		"@smui/common": "7.0.0-beta.18",
+		"@smui/data-table": "7.0.0-beta.18",
+		"@smui/icon-button": "7.0.0-beta.18",
+		"@smui/select": "7.0.0-beta.18",
 		"@sveltejs/adapter-auto": "^3.1.1",
 		"@sveltejs/kit": "^2.5.3",
 		"@sveltejs/vite-plugin-svelte": "^3.0.2",
@@ -59,6 +66,7 @@
 		"svelte": "^4.0.0"
 	},
 	"dependencies": {
+		"flowbite": "^2.3.0",
 		"flowbite-svelte": "^0.44.24",
 		"flowbite-svelte-icons": "^1.4.3",
 		"svelte-routing": "^2.12.0",
